@@ -57,15 +57,16 @@ export const useWeatherStore = create<WeatherStore>((set) => ({
     set({ location: { name, country_code } });
   },
   getCityFromLatLon: async ({ lat, lon }: { lat: number; lon: number }) => {
-    const url = `https://geocoding-api.open-meteo.com/v1/reverse?latitude=${lat}&longitude=${lon}&count=1`;
+    const url = `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=5&appid=${process.env.NEXT_PUBLIC_API_KEY}`;
     const res = await fetch(url);
     const data = await res.json();
 
-    const place = data?.results?.[0];
+    const place = data?.[0];
+
     set({
       location: {
         name: place?.name,
-        country_code: place?.country_code,
+        country_code: place?.country,
       },
     });
   },

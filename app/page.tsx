@@ -1,4 +1,5 @@
 "use client";
+import FiveDayForeCast from "@/components/FiveDayForeCast";
 import TemperatureCard from "@/components/TemperatureCard";
 import { useWeatherStore } from "@/store/weather";
 import {
@@ -7,6 +8,7 @@ import {
   getCloudStatus,
 } from "@/utility/utilityfunction";
 import { useEffect } from "react";
+import { motion } from "framer-motion";
 
 function page() {
   const { getWeatherDataBasesOnLatAndLong, weatherData, airData, location } =
@@ -47,14 +49,24 @@ function page() {
     temperatureMin: weatherData?.daily.temperature_2m_min,
     time: weatherData?.daily.time,
   };
+  const foreCastData = {
+    temperatureMax: weatherData?.daily.temperature_2m_max?.slice(1),
+    temperatureMin: weatherData?.daily.temperature_2m_min?.slice(1),
+    time: weatherData?.daily.time?.slice(1),
+  };
 
   useEffect(() => {
     getWeatherDataBasesOnLatAndLong(38.89511, -77.03637);
   }, []);
 
   return (
-    <div className="flex gap-4 items-center  h-screen mt-5">
-      <div className="flex flex-col items-center gap-4">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+      className="flex gap-4 items-center h-screen mt-5"
+    >
+      <div className="flex md:flex-col flex-row gap-2 md:w-[25%] ">
         <TemperatureCard
           temperature={weatherDataInfo.temperature}
           temperatureUnit={weatherDataInfo.temperatureUnit}
@@ -64,8 +76,12 @@ function page() {
           country={weatherDataInfo.country}
           cloudStatus={weatherDataInfo.cloudStatus}
         />
+        <h2 className="text-white text-lg hidden md:block font-semibold">
+          5 Day Forecast
+        </h2>
+        <FiveDayForeCast foreCastData={foreCastData} />
       </div>
-    </div>
+    </motion.div>
   );
 }
 
