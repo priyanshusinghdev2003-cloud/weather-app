@@ -32,7 +32,7 @@ function TemperatureCard({
   cloudStatus: string;
 }) {
   return (
-    <div className="bg-[#111] rounded-xl p-5 shadow-lg border border-white/5 w-full">
+    <div className="bg-[#111] rounded-xl p-5 pr-10 shadow-lg border border-white/5 w-full">
       {/* Header */}
       <h1 className="text-gray-300 text-lg mb-3">Now</h1>
 
