@@ -83,7 +83,7 @@ function Navbar() {
         onClick={getCurrentLocation}
       >
         <LocateFixed color="#000000" />
-        <p>Current Location</p>
+        <p className="md:block hidden">Current Location</p>
       </div>
     </div>
   );
