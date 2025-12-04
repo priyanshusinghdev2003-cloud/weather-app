@@ -2,26 +2,19 @@ import { getDayNight } from "@/utility/utilityfunction";
 import { Cloud, Moon, Sun, WindArrowDown } from "lucide-react";
 import React from "react";
 
-function TodayWeather({
-  todayHourlyWeather,
-}: {
-  todayHourlyWeather: {
-    temperature: number[];
-    time: string[];
-    windspeed: number[];
-  };
-}) {
+const filterData = (arr: any[], skip: number) => {
+  if (skip === 0) return arr;
+  return arr.filter((_, i) => i % skip === 0);
+};
+
+function TodayWeather({ todayHourlyWeather }: { todayHourlyWeather: any }) {
   const [skipCount, setSkipCount] = React.useState(1);
 
   React.useEffect(() => {
     const updateCount = () => {
-      if (window.innerWidth >= 1024) {
-        setSkipCount(0);
-      } else if (window.innerWidth >= 768) {
-        setSkipCount(2);
-      } else {
-        setSkipCount(3);
-      }
+      if (window.innerWidth >= 1024) setSkipCount(0);
+      else if (window.innerWidth >= 768) setSkipCount(2);
+      else setSkipCount(3);
     };
 
     updateCount();
@@ -29,15 +22,11 @@ function TodayWeather({
     return () => window.removeEventListener("resize", updateCount);
   }, []);
 
-  const filteredTime = todayHourlyWeather.time.filter(
-    (_, i) => i % skipCount === 0
-  );
-  const filteredTemp = todayHourlyWeather.temperature.filter(
-    (_, i) => i % skipCount === 0
-  );
-  const filteredWind = todayHourlyWeather.windspeed.filter(
-    (_, i) => i % skipCount === 0
-  );
+  const filteredTime = filterData(todayHourlyWeather.time, skipCount);
+  const filteredTemp = filterData(todayHourlyWeather.temperature, skipCount);
+  const filteredWind = filterData(todayHourlyWeather.windspeed, skipCount);
+
+  if (filteredTime.length === 0) return null;
 
   return (
     <div className="mt-3">

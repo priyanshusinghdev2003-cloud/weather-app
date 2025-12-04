@@ -14,10 +14,16 @@ import { useEffect } from "react";
 import { motion } from "framer-motion";
 import WeatherInfo from "@/components/WeatherInfo";
 import TodayWeather from "@/components/TodayWeather";
+import Skeleton from "@/components/skeleton";
 
 function page() {
-  const { getWeatherDataBasesOnLatAndLong, weatherData, airData, location } =
-    useWeatherStore();
+  const {
+    getWeatherDataBasesOnLatAndLong,
+    weatherData,
+    airData,
+    location,
+    isLoading,
+  } = useWeatherStore();
 
   const weatherDataInfo = {
     city: location?.name,
@@ -70,7 +76,8 @@ function page() {
   useEffect(() => {
     getWeatherDataBasesOnLatAndLong(38.89511, -77.03637);
   }, []);
-  console.log(todayHourlyWeather);
+
+  if (isLoading) return <Skeleton />;
 
   return (
     <motion.div

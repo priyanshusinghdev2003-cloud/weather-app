@@ -37,7 +37,6 @@ export const useWeatherStore = create<WeatherStore>((set) => ({
           weatherData: data.weatherData,
           airData: data.aqiData,
         });
-        console.log(data);
       })
       .catch((error) => {
         console.log(error);
