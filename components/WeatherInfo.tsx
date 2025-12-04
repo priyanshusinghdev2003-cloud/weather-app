@@ -31,7 +31,7 @@ function WeatherInfo({
       </h2>
 
       <div className="grid grid-cols-4 grid-rows-3 gap-3">
-        <div className="bg-black rounded-xl p-4 h-[120px] row-span-2 md:col-span-2 col-span-4">
+        <div className="bg-black -mt-20 md:mt-0 rounded-xl p-4 h-[120px] row-span-2 md:col-span-2 col-span-4">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-sm text-white/40">Air Quality Index</h2>
             <p
