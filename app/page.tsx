@@ -10,20 +10,16 @@ import {
   getCloudStatus,
   getEvery3Hours,
 } from "@/utility/utilityfunction";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import WeatherInfo from "@/components/WeatherInfo";
 import TodayWeather from "@/components/TodayWeather";
 import Skeleton from "@/components/skeleton";
 
 function page() {
-  const {
-    getWeatherDataBasesOnLatAndLong,
-    weatherData,
-    airData,
-    location,
-    isLoading,
-  } = useWeatherStore();
+  const { getWeatherDataBasesOnLatAndLong, weatherData, airData, location } =
+    useWeatherStore();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const weatherDataInfo = {
     city: location?.name,
