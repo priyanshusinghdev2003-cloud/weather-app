@@ -17,9 +17,13 @@ import TodayWeather from "@/components/TodayWeather";
 import Skeleton from "@/components/skeleton";
 
 function page() {
-  const { getWeatherDataBasesOnLatAndLong, weatherData, airData, location } =
-    useWeatherStore();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const {
+    getWeatherDataBasesOnLatAndLong,
+    weatherData,
+    airData,
+    location,
+    isLoading,
+  } = useWeatherStore();
 
   const weatherDataInfo = {
     city: location?.name,
