@@ -55,6 +55,18 @@ const getDayNight = (dateString: string) => {
   return "Evening";
 };
 
+const debounceFuncton =(fn: Function, delay: number) => {
+  let timeoutId: ReturnType<typeof setTimeout>;
+  return (...args: any[]) => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    timeoutId = setTimeout(() => {
+      fn(...args);
+    }, delay);
+  };
+}
+
 export {
   getCloudStatus,
   getAirQualityStatus,
@@ -65,4 +77,5 @@ export {
   meterToKilometer,
   getEvery3Hours,
   getDayNight,
+  debounceFuncton
 };

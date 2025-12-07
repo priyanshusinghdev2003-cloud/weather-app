@@ -1,7 +1,8 @@
 "use client";
 import { useWeatherStore } from "@/store/weather";
+import { debounceFuncton } from "@/utility/utilityfunction";
 import { Cloud, LocateFixed, LocationEdit, Search } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 function Navbar() {
   const [q, setQ] = useState<string>("");
@@ -19,20 +20,25 @@ function Navbar() {
 
   const [results, setResults] = useState([]);
 
-  async function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
+  const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setQ(value);
 
-    if (value.length < 2) return;
-
+    if (value.length < 2) {
+      setResults([]);
+      return;
+    }
+      debouncedSearch.current(value);
+  };
+  const debouncedSearch = useRef(
+  debounceFuncton(async (value: string) => {
     const res = await fetch(
-      `https://geocoding-api.open-meteo.com/v1/search?name=${value}
-`
+      `https://geocoding-api.open-meteo.com/v1/search?name=${value}`
     );
     const data = await res.json();
-
-    setResults(data?.results);
-  }
+    setResults(data?.results || []);
+  }, 700)
+);
   return (
     <div className="w-full flex justify-between items-center mt-2">
       <div className="flex items-center gap-2">
